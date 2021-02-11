@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web Serial（Write）</title>
+  </head>
+
+  <body>
+    <h1>Web Serial</h1>
+    <button onclick="onStartButtonClick()">接続</button>
+    <button id="write01">書き込み1</button>
+    <button id="write02">書き込み2</button>
+
+    <script>
+      const button01 = document.getElementById("write01");
+      const button02 = document.getElementById("write02");
+      // 以下の「aaa\n」・「bbb\n」という文字列の設定は、micro:bit側のプログラムと
+      // 連動させている部分
+      button01.addEventListener("click", function () {writeText('aaa\n');}, false);
+      button02.addEventListener("click", function () {writeText('bbb\n');}, false);
+
+      let port;
+
+      async function onStartButtonClick() {
+        try {
+          port = await navigator.serial.requestPort();
+          // micro:bit用のレート設定
+          await port.open({ baudRate: 115200 });
+          console.log("接続");
+        } catch (e) {
+          console.log("Error");
+        }
+      }
+
+      async function writeText(text) {
+        const encoder = new TextEncoder();
+        const writer = port.writable.getWriter();
+        await writer.write(encoder.encode(text));
+        console.log("テキスト書き込み: " + text);
+        writer.releaseLock();
+      }
+    </script>
+  </body>
+</html>
