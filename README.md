@@ -2,7 +2,7 @@
 Web Serial API に関するサンプルなどを置くためのリポジトリです。
 
 ## サンプルの構成
-[examples]()の中にソースコードなどがあります。
+[examples](https://github.com/yo-to/WebSeriaAPI/tree/main/examples)の中にソースコードなどがあります。
 # 関連記事
 Qiita に書いた関連記事のリストです。
 
